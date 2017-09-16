@@ -1,8 +1,9 @@
 <%@ page import="fi.jyu.dropboxer.models.Token" %>
-<%@ page import="fi.jyu.dropboxer.models.AccountInfo" %>
 <%@ page import="fi.jyu.dropboxer.Config" %>
 <%@ page import="fi.jyu.dropboxer.models.Metadata" %>
 <%@ page import="fi.jyu.dropboxer.client.DropboxClient" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -29,9 +30,14 @@
             <td>Path</td>
             <td>Size</td>
         </tr>
-    <% for(Metadata content : metadata.getContents()){ %>
+    <%
+        List<Metadata> revContents = metadata.getContents();
+        Collections.reverse(revContents);
+        for(Metadata content : revContents){ %>
         <tr>
-            <td><%=content.getIsDir()?"folder":"file"%></td>
+            <td>
+                <img src="<%= content.getIsDir()?"images/folder.jpg":"images/file.png" %>" alt="some image" class="icon">
+            </td>
             <td><%=content.getPath()%></td>
             <td><%=content.getSize()%></td>
         </tr>
