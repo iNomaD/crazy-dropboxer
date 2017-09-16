@@ -20,7 +20,11 @@
     <h1>Welcome, <%=accountInfo.getDisplayName()%></h1>
 
     <div class="connectButton" id="stateButton" onclick="changeState()">Show Information</div>
-    <div class="connectButton" onclick="uploadImage()">Upload an Image</div>
+    <div class="connectButton" style="position: relative">
+        <input type="file" accept="image/png,image/gif" id="select" style="display: block;" class="test">
+        <div>select an Image</div>
+    </div>
+    <div class="connectButton connectButton_s" style="position: relative" id="upload" onclick="uploadImage()">upload</div>
 
     <BR></BR>
     <div id="informationBlock">
@@ -69,5 +73,6 @@
             </tr>
         </table>
     </div>
+    <img src="" id="imgContent">
 </body>
 </html>

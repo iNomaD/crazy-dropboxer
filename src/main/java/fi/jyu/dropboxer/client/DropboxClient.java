@@ -4,16 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fi.jyu.dropboxer.Config;
 import fi.jyu.dropboxer.models.AccountInfo;
+import fi.jyu.dropboxer.models.ImageInfo;
 import fi.jyu.dropboxer.models.Token;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by Denis on 12.09.2017.
@@ -107,6 +108,33 @@ public class DropboxClient {
             connection.disconnect();
         }
         return accountInfo;
+    }
+
+    public void uploadFile(String token, String path,String name) throws URISyntaxException,IOException{
+        String access_token = ""+token;
+        String sourcePath = ""+path; //required file path on local file system
+        Path pathFile = Paths.get(sourcePath);
+        byte[] data = Files.readAllBytes(pathFile);
+        StringBuilder uploadInfoUri=new StringBuilder(Config.APIUrlFilesPut+"MyFirstDApp_files/images/"+name);
+        uploadInfoUri.append("?access_token=");
+        uploadInfoUri.append(URLEncoder.encode(access_token,"UTF-8"));
+        URL url=new URL(uploadInfoUri.toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        System.out.println(uploadInfoUri.toString());
+        try {
+            connection.setDoOutput(true);
+            connection.setRequestMethod("PUT");
+            connection.setRequestProperty("Content-Type", "mime/type");
+            connection.setRequestProperty("Content-Length", String.valueOf(data.length));
+            OutputStream outputStream = connection.getOutputStream();
+            outputStream.write(data);
+            outputStream.flush();
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+// in the same way (as in the previous example) read response from the BufferReader …
+        } finally {
+            connection.disconnect();
+        }
     }
 
 }

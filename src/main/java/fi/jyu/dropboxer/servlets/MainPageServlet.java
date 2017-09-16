@@ -44,4 +44,21 @@ public class MainPageServlet extends HttpServlet{
         response.setCharacterEncoding("UTF-8");
         response.sendRedirect("/error_page.jsp");
     }
+    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = request.getParameter("path");
+        String name = request.getParameter("name");
+        System.out.println(path);
+        try {
+            DropboxClient dropboxClient = DropboxClient.getInstance();
+            Token token = (Token) request.getSession().getAttribute("token");
+
+            if(token != null) {
+                dropboxClient.uploadFile(token.getAccessToken(),"D://F//079.PNG",name);//fixd path
+                System.out.println("pass");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

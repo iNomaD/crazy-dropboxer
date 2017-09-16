@@ -7,4 +7,5 @@ public class Config {
     public static String APIUrl = "https://api.dropboxapi.com/";
     public static String APIUrlToken = "https://api.dropbox.com/1/oauth2/token";
     public static String APIUrlAccountInfo = "https://api.dropbox.com/1/account/info";
+    public static String APIUrlFilesPut = "https://content.dropboxapi.com/1/files_put/dropbox/";
 }
