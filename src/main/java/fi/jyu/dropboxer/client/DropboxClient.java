@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import fi.jyu.dropboxer.Config;
 import fi.jyu.dropboxer.models.AccountInfo;
 import fi.jyu.dropboxer.models.ImageInfo;
+import fi.jyu.dropboxer.models.Metadata;
 import fi.jyu.dropboxer.models.Token;
 
 import java.io.*;
@@ -137,4 +138,29 @@ public class DropboxClient {
         }
     }
 
+    public Metadata getMetadata(String tokenStr, String path) throws URISyntaxException, IOException {
+        Metadata metadata = null;
+        String access_token = ""+tokenStr;
+        StringBuilder metadataUri=new StringBuilder(Config.APIUrlMetadata+path);
+        metadataUri.append("?access_token=");
+        metadataUri.append(URLEncoder.encode(access_token,"UTF-8"));
+        URL url=new URL(metadataUri.toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try {
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            Gson gson = new GsonBuilder().create();
+            System.out.println(response.toString());
+            metadata = gson.fromJson(response.toString(), Metadata.class);
+        } finally {
+            connection.disconnect();
+        }
+        return metadata;
+    }
 }

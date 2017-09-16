@@ -24,6 +24,7 @@
     <%
         if(code != null){
     %>
+        <BR>
         <div class="accessButton" onclick="location.href = '/MainPageServlet?code=<%=code%>&redirect_uri=<%=requestURL%>'">Access</div>
     <%
         }
