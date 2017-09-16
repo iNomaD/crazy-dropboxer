@@ -1,6 +1,7 @@
 package fi.jyu.dropboxer.servlets;
 
 import fi.jyu.dropboxer.client.DropboxClient;
+import fi.jyu.dropboxer.models.AccountInfo;
 import fi.jyu.dropboxer.models.Token;
 
 import javax.servlet.ServletException;
@@ -21,13 +22,18 @@ public class MainPageServlet extends HttpServlet{
             DropboxClient dropboxClient = DropboxClient.getInstance();
             Token token = dropboxClient.getAccessToken(code, redirectUri);
 
-            if(token != null) {
-                request.getSession().setAttribute("token", token);
 
-                response.setContentType("text/html");
-                response.setCharacterEncoding("UTF-8");
-                response.sendRedirect("/main_page.jsp");
-                return;
+            if(token != null) {
+                AccountInfo accountInfo = dropboxClient.getAccountInfo(token.getAccessToken());
+                if(accountInfo != null){
+                    request.getSession().setAttribute("token", token);
+                    request.getSession().setAttribute("account_info", accountInfo);
+
+                    response.setContentType("text/html");
+                    response.setCharacterEncoding("UTF-8");
+                    response.sendRedirect("/main_page.jsp");
+                    return;
+                }
             }
         }
         catch (Exception e){

@@ -7,7 +7,7 @@ public class AccountInfo {
 
     @SerializedName("uid")
     @Expose
-    private Integer uid;
+    private Long uid;
     @SerializedName("display_name")
     @Expose
     private String displayName;
@@ -39,11 +39,11 @@ public class AccountInfo {
     @Expose
     private QuotaInfo quotaInfo;
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

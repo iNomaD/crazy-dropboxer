@@ -7,35 +7,35 @@ public class QuotaInfo {
 
     @SerializedName("shared")
     @Expose
-    private Integer shared;
+    private Long shared;
     @SerializedName("quota")
     @Expose
-    private Integer quota;
+    private Long quota;
     @SerializedName("normal")
     @Expose
-    private Integer normal;
+    private Long normal;
 
-    public Integer getShared() {
+    public Long getShared() {
         return shared;
     }
 
-    public void setShared(Integer shared) {
+    public void setShared(Long shared) {
         this.shared = shared;
     }
 
-    public Integer getQuota() {
+    public Long getQuota() {
         return quota;
     }
 
-    public void setQuota(Integer quota) {
+    public void setQuota(Long quota) {
         this.quota = quota;
     }
 
-    public Integer getNormal() {
+    public Long getNormal() {
         return normal;
     }
 
-    public void setNormal(Integer normal) {
+    public void setNormal(Long normal) {
         this.normal = normal;
     }
 

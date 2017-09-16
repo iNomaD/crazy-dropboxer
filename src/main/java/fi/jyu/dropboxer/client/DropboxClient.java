@@ -74,6 +74,7 @@ public class DropboxClient {
             }
             in.close();
             Gson gson = new GsonBuilder().create();
+            System.out.println(response.toString());
             token = gson.fromJson(response.toString(), Token.class);
         }
         finally {
@@ -82,18 +83,30 @@ public class DropboxClient {
         }
     }
 
-    public AccountInfo getAccountInfo(){
-        /*
+    public AccountInfo getAccountInfo(String tokenStr) throws URISyntaxException, IOException {
+        AccountInfo accountInfo = null;
+        String access_token = ""+tokenStr;
+        StringBuilder accountInfoUri=new StringBuilder(Config.APIUrlAccountInfo);
+        accountInfoUri.append("?access_token=");
+        accountInfoUri.append(URLEncoder.encode(access_token,"UTF-8"));
+        URL url=new URL(accountInfoUri.toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
-            String locale = null;
-            Call<AccountInfo> call = dropboxApi.getAccountInfo(locale);
-            Response<AccountInfo> response = call.execute();
-            return response.body();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }*/
-        return null;
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            Gson gson = new GsonBuilder().create();
+            System.out.println(response.toString());
+            accountInfo = gson.fromJson(response.toString(), AccountInfo.class);
+        } finally {
+            connection.disconnect();
+        }
+        return accountInfo;
     }
 
 }

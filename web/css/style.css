@@ -78,3 +78,6 @@
     position:relative;
     top:1px;
 }
+#informationBlock{
+    display: none;
+}
