@@ -1,0 +1,41 @@
+package fi.jyu.dropboxer.servlets;
+
+import fi.jyu.dropboxer.client.DropboxClient;
+import fi.jyu.dropboxer.models.Token;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/MainPageServlet")
+public class MainPageServlet extends HttpServlet{
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String code = request.getParameter("code");
+        String redirectUri = request.getParameter("redirect_uri");
+
+        try {
+            DropboxClient dropboxClient = DropboxClient.getInstance();
+            Token token = dropboxClient.getAccessToken(code, redirectUri);
+
+            if(token != null) {
+                request.getSession().setAttribute("token", token);
+
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");
+                response.sendRedirect("/main_page.jsp");
+                return;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        response.sendRedirect("/error_page.jsp");
+    }
+}
