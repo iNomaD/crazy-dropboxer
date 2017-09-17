@@ -128,7 +128,7 @@ public class DropboxClient {
         } finally {
             connection.disconnect();
         }
-        return Config.dropboxDir;
+        return Config.dropboxDir+"/"+name;
     }
 
     public SharesInfo createShareableUrl(String token,String cPath) throws  URISyntaxException, IOException{
