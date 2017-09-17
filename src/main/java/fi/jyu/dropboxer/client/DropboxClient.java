@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fi.jyu.dropboxer.Config;
 import fi.jyu.dropboxer.models.*;
+import org.apache.commons.io.IOUtils;
+//import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -108,12 +110,10 @@ public class DropboxClient {
         return accountInfo;
     }
 
-    public void uploadFile(String token, String path,String name) throws URISyntaxException,IOException{
+    public void uploadFile(String token, InputStream file,String name) throws URISyntaxException,IOException{
         String access_token = ""+token;
-        String sourcePath = ""+path; //required file path on local file system
-        Path pathFile = Paths.get(sourcePath);
-        byte[] data = Files.readAllBytes(pathFile);
-        StringBuilder uploadInfoUri=new StringBuilder(Config.APIUrlFilesPut+"MyFirstDApp_files/images/"+name);
+        byte[] data = IOUtils.toByteArray(file);
+        StringBuilder uploadInfoUri=new StringBuilder(Config.APIUrlFilesPut+"/"+Config.dropboxDir+name);
         uploadInfoUri.append("?access_token=");
         uploadInfoUri.append(URLEncoder.encode(access_token,"UTF-8"));
         URL url=new URL(uploadInfoUri.toString());

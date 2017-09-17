@@ -22,11 +22,13 @@
     <div class="connectButton" onclick="location.href = 'content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
     <BR>
 
-    <div class="connectButton" style="position: relative">
-        <input type="file" accept="image/png,image/gif" id="select" style="display: block;">
-        <div>select an Image</div>
-    </div>
-    <div class="connectButton connectButton_s" style="position: relative" id="upload" onclick="uploadImage()">upload</div>
+    <form action="MainPageServlet" method="post" enctype="multipart/form-data">
+        <div class="connectButton" style="position: relative">
+            <input type="file" accept="image/png,image/gif" id="file" name="file" style="display: block;">
+            <div>select an Image</div>
+        </div>
+        <input type="submit" class="connectButton connectButton_s" style="position: relative" id="upload" ></input>
+    </form>
 
     <BR>
     <div class="connectButton" id="stateButton" onclick="changeState()">Account Information</div>
