@@ -3,9 +3,7 @@ package fi.jyu.dropboxer.client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fi.jyu.dropboxer.Config;
-import fi.jyu.dropboxer.models.AccountInfo;
-import fi.jyu.dropboxer.models.ImageInfo;
-import fi.jyu.dropboxer.models.Token;
+import fi.jyu.dropboxer.models.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -137,4 +135,55 @@ public class DropboxClient {
         }
     }
 
+    public Metadata getMetadata(String tokenStr, String path) throws URISyntaxException, IOException {
+        Metadata metadata = null;
+        String access_token = ""+tokenStr;
+        StringBuilder metadataUri=new StringBuilder(Config.APIUrlMetadata+path);
+        metadataUri.append("?access_token=");
+        metadataUri.append(URLEncoder.encode(access_token,"UTF-8"));
+        URL url=new URL(metadataUri.toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try {
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            Gson gson = new GsonBuilder().create();
+            System.out.println(response.toString());
+            metadata = gson.fromJson(response.toString(), Metadata.class);
+        } finally {
+            connection.disconnect();
+        }
+        return metadata;
+    }
+
+    public Media getMedia(String tokenStr, String path) throws URISyntaxException, IOException {
+        Media media = null;
+        String access_token = ""+tokenStr;
+        StringBuilder mediaUri=new StringBuilder(Config.APIUrlMedia+path);
+        mediaUri.append("?access_token=");
+        mediaUri.append(URLEncoder.encode(access_token,"UTF-8"));
+        URL url=new URL(mediaUri.toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try {
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            Gson gson = new GsonBuilder().create();
+            System.out.println(response.toString());
+            media = gson.fromJson(response.toString(), Media.class);
+        } finally {
+            connection.disconnect();
+        }
+        return media;
+    }
 }

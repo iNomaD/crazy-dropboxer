@@ -14,7 +14,6 @@
      -webkit-border-radius:18px;
      border-radius:18px;
      border:2px solid #74b807;
-     display:inline-block;
      cursor:pointer;
      color:#ffffff;
      font-family:Arial;
@@ -23,6 +22,10 @@
      padding:14px 52px;
      text-decoration:none;
      text-shadow:0px 1px 0px #528009;
+     text-align: center;
+     display: block;
+     width: 300px;
+     margin-left: 10px;
  }
 .connectButton_s{
     padding:6px 20px;
@@ -57,7 +60,6 @@
     -webkit-border-radius:18px;
     border-radius:18px;
     border:1px solid #d83526;
-    display:inline-block;
     cursor:pointer;
     color:#ffffff;
     font-family:Arial;
@@ -66,6 +68,10 @@
     padding:14px 52px;
     text-decoration:none;
     text-shadow:0px 1px 0px #528009;
+    text-align: center;
+    display: block;
+    width: 300px;
+    margin-left: 10px;
 }
 .accessButton:hover {
     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403));
@@ -101,4 +107,17 @@
     display: none;
     position: absolute;
     left: 460px;
+}
+
+#penguin{
+    width: 300px;
+    height: 300px;
+    margin-left: 60px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.icon{
+    width: 20px;
+    height: 20px;
 }

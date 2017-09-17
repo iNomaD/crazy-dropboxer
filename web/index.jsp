@@ -21,9 +21,11 @@
         location += "&redirect_uri=" + requestURL;
     %>
         <div class="connectButton" onclick="location.href = '<%=location%>'">Connect</div>
+        <img src="images/gnomePenguinDropBox.jpg" alt="some image" id="penguin">
     <%
         if(code != null){
     %>
+        <BR>
         <div class="accessButton" onclick="location.href = '/MainPageServlet?code=<%=code%>&redirect_uri=<%=requestURL%>'">Access</div>
     <%
         }
