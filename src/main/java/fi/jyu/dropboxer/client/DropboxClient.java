@@ -110,10 +110,10 @@ public class DropboxClient {
         return accountInfo;
     }
 
-    public void uploadFile(String token, InputStream file,String name) throws URISyntaxException,IOException{
+    public String uploadFile(String token, InputStream file,String name) throws URISyntaxException,IOException{
         String access_token = ""+token;
         byte[] data = IOUtils.toByteArray(file);
-        StringBuilder uploadInfoUri=new StringBuilder(Config.APIUrlFilesPut+"/"+Config.dropboxDir+name);
+        StringBuilder uploadInfoUri=new StringBuilder(Config.APIUrlFilesPut+Config.dropboxDir+"/"+name);
         uploadInfoUri.append("?access_token=");
         uploadInfoUri.append(URLEncoder.encode(access_token,"UTF-8"));
         URL url=new URL(uploadInfoUri.toString());
@@ -133,6 +133,37 @@ public class DropboxClient {
         } finally {
             connection.disconnect();
         }
+        return Config.dropboxDir;
+    }
+
+    public SharesInfo createShareableUrl(String token,String cPath) throws  URISyntaxException, IOException{
+        SharesInfo sharesInfo = new SharesInfo();
+        String access_token = ""+token;
+        StringBuilder sharesUri=new StringBuilder(Config.APIUrlShares + cPath);
+        sharesUri.append("?access_token=");
+        sharesUri.append(URLEncoder.encode(access_token,"UTF-8"));
+        URL url=new URL(sharesUri.toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try {
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+//print result
+            Gson gson = new GsonBuilder().create();
+            System.out.println(response.toString());
+            sharesInfo = gson.fromJson(response.toString(), SharesInfo.class);
+
+        } finally {
+            connection.disconnect();
+        }
+        return  sharesInfo;
     }
 
     public Metadata getMetadata(String tokenStr, String path) throws URISyntaxException, IOException {

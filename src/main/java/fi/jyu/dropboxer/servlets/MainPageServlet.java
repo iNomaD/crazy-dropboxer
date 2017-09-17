@@ -2,6 +2,7 @@ package fi.jyu.dropboxer.servlets;
 
 import fi.jyu.dropboxer.client.DropboxClient;
 import fi.jyu.dropboxer.models.AccountInfo;
+import fi.jyu.dropboxer.models.SharesInfo;
 import fi.jyu.dropboxer.models.Token;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,8 +53,9 @@ public class MainPageServlet extends HttpServlet{
         response.sendRedirect("/error_page.jsp");
     }
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    if(request.getPart("file")!=null) {
         Part filePart = request.getPart("file");
-        if(filePart!=null){
+        if (filePart != null) {
             String name = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             InputStream fileContent = filePart.getInputStream();
 
@@ -60,13 +63,13 @@ public class MainPageServlet extends HttpServlet{
                 DropboxClient dropboxClient = DropboxClient.getInstance();
                 Token token = (Token) request.getSession().getAttribute("token");
 
-                if(token != null) {
-                    dropboxClient.uploadFile(token.getAccessToken(),fileContent,name);
+                if (token != null) {
+                    request.getSession().setAttribute("currentPath", dropboxClient.uploadFile(token.getAccessToken(), fileContent, name));
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
     }
 }

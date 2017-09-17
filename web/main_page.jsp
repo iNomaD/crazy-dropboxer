@@ -1,6 +1,7 @@
 <%@ page import="fi.jyu.dropboxer.models.Token" %>
 <%@ page import="fi.jyu.dropboxer.models.AccountInfo" %>
 <%@ page import="fi.jyu.dropboxer.Config" %>
+<%@ page import="fi.jyu.dropboxer.models.SharesInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -9,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="css/simple_table.css" />
     <script type='text/javascript' src='scripts/AJAXlib.js'></script>
+    <script type='text/javascript' src='scripts/jquery-3.2.1.min.js'></script>
+    <script type="application/javascript" src="scripts/jquery.form.min.js"></script>
     <script type='text/javascript' src='scripts/scripts.js'></script>
 </head>
 <body>
@@ -22,14 +25,15 @@
     <div class="connectButton" onclick="location.href = 'content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
     <BR>
 
-    <form action="MainPageServlet" method="post" enctype="multipart/form-data">
+    <form enctype="multipart/form-data" id="uploadFile" action="MainPageServlet" method="post">
         <div class="connectButton" style="position: relative">
             <input type="file" accept="image/png,image/gif" id="file" name="file" style="display: block;">
             <div>select an Image</div>
         </div>
-        <input type="submit" class="connectButton connectButton_s" style="position: relative" id="upload" ></input>
+        <input type="submit" class="connectButton connectButton_s" id="upload" ></input>
+        <div class="connectButton connectButton_s" id="shares" onclick="shares()">Share</div>
     </form>
-
+    <div id="shareLink">shareLink</div>
     <BR>
     <div class="connectButton" id="stateButton" onclick="changeState()">Account Information</div>
 
