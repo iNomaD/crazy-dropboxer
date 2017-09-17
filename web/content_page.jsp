@@ -15,6 +15,7 @@
 </head>
 <body>
     <%
+        String contextPath = request.getContextPath();
         Token token = (Token) session.getAttribute("token");
         String accessToken = token.getAccessToken();
         String path = request.getParameter("path");
@@ -44,10 +45,10 @@
             for(Metadata content : revContents){ %>
                 <tr>
                     <td>
-                        <img src="<%= content.getIsDir()?"images/folder.jpg":"images/file.png" %>" alt="some image" class="icon">
+                        <img src="<%= content.getIsDir()?contextPath+"/images/folder.jpg":contextPath+"/images/file.png" %>" alt="some image" class="icon">
                     </td>
                     <td>
-                        <a href="<%=content.getIsDir()?"content_page.jsp":"MediaLinkServlet"%>?path=<%=content.getPath()%>"><%=content.getPath()%></a>
+                        <a href="<%=content.getIsDir()?contextPath+"/content_page.jsp":contextPath+"/MediaLinkServlet"%>?path=<%=content.getPath()%>"><%=content.getPath()%></a>
                     </td>
                     <td>
                         <%=content.getIsDir() ? "" : content.getSize()%>

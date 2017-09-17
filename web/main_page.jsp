@@ -16,13 +16,14 @@
 </head>
 <body>
     <%
+        String contextPath = request.getContextPath();
         Token token = (Token) session.getAttribute("token");
         String accessToken = token.getAccessToken();
         AccountInfo accountInfo = (AccountInfo) session.getAttribute("account_info");
     %>
     <h1>Welcome, <%=accountInfo.getDisplayName()%></h1>
 
-    <div class="connectButton" onclick="location.href = 'content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
+    <div class="connectButton" onclick="location.href = '<%=contextPath%>/content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
     <BR>
 
     <div>
@@ -31,7 +32,7 @@
     </div>
     <BR>
 
-    <form enctype="multipart/form-data" id="uploadFile" action="MainPageServlet" method="post">
+    <form enctype="multipart/form-data" id="uploadFile" action="<%=contextPath%>/MainPageServlet" method="post">
         <div class="connectButton" style="position: relative">
             <input type="file" accept="image/png,image/gif,image/jpg" id="file" name="file" onchange="fileSelected()">
             <div id="selectedFileName">Select an Image</div>

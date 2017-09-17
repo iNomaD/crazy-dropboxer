@@ -12,7 +12,8 @@
   <body>
     <h1>Login to Crazy Dropboxer</h1>
     <%
-        String requestURL = request.getRequestURL().toString();
+        String contextPath = request.getContextPath();
+        String requestURL = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +  request.getRequestURI();
         String code = request.getParameter("code");
 
         String location = "https://www.dropbox.com/1/oauth2/authorize";
@@ -26,7 +27,7 @@
         if(code != null){
     %>
         <BR>
-        <div class="accessButton" onclick="location.href = '/MainPageServlet?code=<%=code%>&redirect_uri=<%=requestURL%>'">Access</div>
+        <div class="accessButton" onclick="location.href = '<%=contextPath%>/MainPageServlet?code=<%=code%>&redirect_uri=<%=requestURL%>'">Access</div>
     <%
         }
     %>
