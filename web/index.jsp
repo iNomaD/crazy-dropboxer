@@ -13,7 +13,7 @@
     <h1>Login to Crazy Dropboxer</h1>
     <%
         String contextPath = request.getContextPath();
-        String requestURL = request.getRequestURL().toString();
+        String requestURL = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +  request.getRequestURI();
         String code = request.getParameter("code");
 
         String location = "https://www.dropbox.com/1/oauth2/authorize";
