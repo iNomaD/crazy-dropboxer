@@ -36,7 +36,7 @@ public class MainPageServlet extends HttpServlet{
 
                     response.setContentType("text/html");
                     response.setCharacterEncoding("UTF-8");
-                    response.sendRedirect("/main_page.jsp");
+                    response.sendRedirect(request.getContextPath()+"/main_page.jsp");
                     return;
                 }
             }
@@ -47,7 +47,7 @@ public class MainPageServlet extends HttpServlet{
 
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
-        response.sendRedirect("/error_page.jsp");
+        response.sendRedirect(request.getContextPath()+"/error_page.jsp");
     }
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(request.getPart("file")!=null) {

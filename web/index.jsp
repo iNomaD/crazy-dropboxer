@@ -12,6 +12,7 @@
   <body>
     <h1>Login to Crazy Dropboxer</h1>
     <%
+        String contextPath = request.getContextPath();
         String requestURL = request.getRequestURL().toString();
         String code = request.getParameter("code");
 
@@ -26,7 +27,7 @@
         if(code != null){
     %>
         <BR>
-        <div class="accessButton" onclick="location.href = '/MainPageServlet?code=<%=code%>&redirect_uri=<%=requestURL%>'">Access</div>
+        <div class="accessButton" onclick="location.href = '<%=contextPath%>/MainPageServlet?code=<%=code%>&redirect_uri=<%=requestURL%>'">Access</div>
     <%
         }
     %>

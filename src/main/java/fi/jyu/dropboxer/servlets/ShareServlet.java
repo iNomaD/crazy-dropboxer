@@ -1,5 +1,6 @@
 package fi.jyu.dropboxer.servlets;
 
+import fi.jyu.dropboxer.Config;
 import fi.jyu.dropboxer.client.DropboxClient;
 import fi.jyu.dropboxer.models.Token;
 
@@ -21,6 +22,9 @@ public class ShareServlet extends HttpServlet{
         if (request.getParameter("share").equals("true")){
             String cPath = (String) request.getSession().getAttribute("currentPath");
             Token token = (Token) request.getSession().getAttribute("token");
+            if(cPath == null){
+                cPath = Config.dropboxDir;
+            }
             if(cPath.equals("")){
                 request.getSession().setAttribute("shareLink",null);
                 return;
