@@ -21,7 +21,7 @@
 
     <div class="connectButton" id="stateButton" onclick="changeState()">Show Information</div>
     <div class="connectButton" style="position: relative">
-        <input type="file" accept="image/png,image/gif" id="select" style="display: block;" class="test">
+        <input type="file" accept="image/png,image/gif" id="select" style="display: block;">
         <div>select an Image</div>
     </div>
     <div class="connectButton connectButton_s" style="position: relative" id="upload" onclick="uploadImage()">upload</div>
