@@ -27,7 +27,7 @@
 
     <form enctype="multipart/form-data" id="uploadFile" action="MainPageServlet" method="post">
         <div class="connectButton" style="position: relative">
-            <input type="file" accept="image/png,image/gif" id="file" name="file" style="display: block;">
+            <input type="file" accept="image/png,image/gif,image/jpg" id="file" name="file" style="display: block;">
             <div>select an Image</div>
         </div>
         <input type="submit" class="connectButton connectButton_s" id="upload" ></input>
