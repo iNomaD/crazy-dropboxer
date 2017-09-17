@@ -1,5 +1,6 @@
 <%@ page import="fi.jyu.dropboxer.models.Token" %>
 <%@ page import="fi.jyu.dropboxer.models.AccountInfo" %>
+<%@ page import="fi.jyu.dropboxer.Config" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -18,7 +19,7 @@
     %>
     <h1>Welcome, <%=accountInfo.getDisplayName()%></h1>
 
-    <div class="connectButton" onclick="location.href = 'content_page.jsp'">List of uploaded images</div>
+    <div class="connectButton" onclick="location.href = 'content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
     <BR>
 
     <div class="connectButton" style="position: relative">

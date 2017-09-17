@@ -17,32 +17,44 @@
     <%
         Token token = (Token) session.getAttribute("token");
         String accessToken = token.getAccessToken();
+        String path = request.getParameter("path");
 
         DropboxClient dropboxClient = DropboxClient.getInstance();
-        Metadata metadata = dropboxClient.getMetadata(accessToken, Config.dropboxDir);
-        System.out.println(metadata);
+        Metadata metadata = dropboxClient.getMetadata(accessToken, path);
     %>
-    <h1>Contents of the folder "<%=Config.dropboxDir%>"</h1>
+    <h1>Contents of the folder "<%=metadata.getPath()%>"</h1>
 
-    <table class="simple-little-table">
-        <tr>
-            <td></td>
-            <td>Path</td>
-            <td>Size</td>
-        </tr>
     <%
         List<Metadata> revContents = metadata.getContents();
-        Collections.reverse(revContents);
-        for(Metadata content : revContents){ %>
-        <tr>
-            <td>
-                <img src="<%= content.getIsDir()?"images/folder.jpg":"images/file.png" %>" alt="some image" class="icon">
-            </td>
-            <td><%=content.getPath()%></td>
-            <td><%=content.getSize()%></td>
-        </tr>
-    <% } %>
-    </table>
-
+        if(revContents.isEmpty()){
+            %>
+                <h3>Folder is empty</h3>
+            <%
+        }
+        else{
+            %>
+                <table class="simple-little-table">
+                <tr>
+                    <td></td>
+                    <td>Path</td>
+                    <td>Size</td>
+                </tr>
+            <%
+            Collections.reverse(revContents);
+            for(Metadata content : revContents){ %>
+                <tr>
+                    <td>
+                        <img src="<%= content.getIsDir()?"images/folder.jpg":"images/file.png" %>" alt="some image" class="icon">
+                    </td>
+                    <td>
+                        <a href="<%=content.getIsDir()?"content_page.jsp":"MediaLinkServlet"%>?path=<%=content.getPath()%>"><%=content.getPath()%></a>
+                    </td>
+                    <td>
+                        <%=content.getIsDir() ? "" : content.getSize()%>
+                    </td>
+                </tr>
+            <% } %>
+            </table>
+        <% } %>
 </body>
 </html>
