@@ -34,6 +34,7 @@ $(function () {
     $('#uploadFile').ajaxForm({
         success:function (msg) {
             fileUploaded();
+            hideLinks(false);
             alert("uploaded!");
         },error:function (msg) {
             fileUploaded();
@@ -62,4 +63,11 @@ function doQuery_back(result)
         window.document.getElementById('shareLink').style.color="#000";
         showSharedLink();
     }
+}
+
+function hideLinks(condition){
+    if(condition)
+        window.document.getElementById('links').style.display = 'none';
+    else
+        window.document.getElementById('links').style.display = 'block';
 }

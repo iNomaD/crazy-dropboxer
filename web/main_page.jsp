@@ -1,7 +1,8 @@
-<%@ page import="fi.jyu.dropboxer.models.Token" %>
-<%@ page import="fi.jyu.dropboxer.models.AccountInfo" %>
 <%@ page import="fi.jyu.dropboxer.Config" %>
-<%@ page import="fi.jyu.dropboxer.models.SharesInfo" %>
+<%@ page import="fi.jyu.dropboxer.client.DropboxClient" %>
+<%@ page import="fi.jyu.dropboxer.models.AccountInfo" %>
+<%@ page import="fi.jyu.dropboxer.models.Metadata" %>
+<%@ page import="fi.jyu.dropboxer.models.Token" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -20,17 +21,28 @@
         Token token = (Token) session.getAttribute("token");
         String accessToken = token.getAccessToken();
         AccountInfo accountInfo = (AccountInfo) session.getAttribute("account_info");
+
+        // check whether the contents of the folder is empty
+        DropboxClient dropboxClient = DropboxClient.getInstance();
+        Metadata metadata = dropboxClient.getMetadata(accessToken, Config.dropboxDir);
+        boolean hideLinks = metadata == null || metadata.getContents() == null || metadata.getContents().size() == 0;
     %>
     <h1>Welcome, <%=accountInfo.getDisplayName()%></h1>
 
-    <div class="connectButton" onclick="location.href = '<%=contextPath%>/content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
-    <BR>
+    <div id="links">
+        <div class="connectButton" onclick="location.href = '<%=contextPath%>/content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
+        <BR>
 
-    <div>
-        <div class="connectButton" id="shares" onclick="shares()">Create a share link</div>
-        <div id="shareLink">Shared Link</div>
+        <div>
+            <div class="connectButton" id="shares" onclick="shares()">Create a share link</div>
+            <div id="shareLink">Shared Link</div>
+        </div>
+        <BR>
     </div>
-    <BR>
+
+    <script type="text/javascript">
+        hideLinks(<%=hideLinks%>);
+    </script>
 
     <form enctype="multipart/form-data" id="uploadFile" action="<%=contextPath%>/MainPageServlet" method="post">
         <div class="connectButton" style="position: relative">
