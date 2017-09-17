@@ -25,19 +25,24 @@
     <div class="connectButton" onclick="location.href = 'content_page.jsp?path=<%=Config.dropboxDir%>'">List of uploaded images</div>
     <BR>
 
+    <div>
+        <div class="connectButton" id="shares" onclick="shares()">Create a share link</div>
+        <div id="shareLink">Shared Link</div>
+    </div>
+    <BR>
+
     <form enctype="multipart/form-data" id="uploadFile" action="MainPageServlet" method="post">
         <div class="connectButton" style="position: relative">
-            <input type="file" accept="image/png,image/gif,image/jpg" id="file" name="file" style="display: block;">
-            <div>select an Image</div>
+            <input type="file" accept="image/png,image/gif,image/jpg" id="file" name="file" onchange="fileSelected()">
+            <div id="selectedFileName">Select an Image</div>
         </div>
-        <input type="submit" class="connectButton connectButton_s" id="upload" ></input>
-        <div class="connectButton connectButton_s" id="shares" onclick="shares()">Share</div>
+        <input type="submit" class="accessButton" id="upload" value="Send">
     </form>
-    <div id="shareLink">shareLink</div>
     <BR>
-    <div class="connectButton" id="stateButton" onclick="changeState()">Account Information</div>
 
-    <BR></BR>
+    <div class="connectButton" id="stateButton" onclick="changeState()">Account Information</div>
+    <BR>
+
     <div id="informationBlock">
         <table class="simple-little-table">
             <tr>

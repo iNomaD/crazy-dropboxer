@@ -5,16 +5,12 @@ import com.google.gson.GsonBuilder;
 import fi.jyu.dropboxer.Config;
 import fi.jyu.dropboxer.models.*;
 import org.apache.commons.io.IOUtils;
-//import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Created by Denis on 12.09.2017.
@@ -110,7 +106,7 @@ public class DropboxClient {
         return accountInfo;
     }
 
-    public String uploadFile(String token, InputStream file,String name) throws URISyntaxException,IOException{
+    public String uploadFile(String token, InputStream file, String name) throws URISyntaxException,IOException{
         String access_token = ""+token;
         byte[] data = IOUtils.toByteArray(file);
         StringBuilder uploadInfoUri=new StringBuilder(Config.APIUrlFilesPut+Config.dropboxDir+"/"+name);
@@ -128,8 +124,7 @@ public class DropboxClient {
             outputStream.write(data);
             outputStream.flush();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-// in the same way (as in the previous example) read response from the BufferReader …
+            // in the same way (as in the previous example) read response from the BufferReader …
         } finally {
             connection.disconnect();
         }
@@ -137,7 +132,7 @@ public class DropboxClient {
     }
 
     public SharesInfo createShareableUrl(String token,String cPath) throws  URISyntaxException, IOException{
-        SharesInfo sharesInfo = new SharesInfo();
+        SharesInfo sharesInfo = null;
         String access_token = ""+token;
         StringBuilder sharesUri=new StringBuilder(Config.APIUrlShares + cPath);
         sharesUri.append("?access_token=");
@@ -155,7 +150,7 @@ public class DropboxClient {
                 response.append(inputLine);
             }
             in.close();
-//print result
+
             Gson gson = new GsonBuilder().create();
             System.out.println(response.toString());
             sharesInfo = gson.fromJson(response.toString(), SharesInfo.class);

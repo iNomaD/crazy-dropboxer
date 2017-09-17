@@ -27,12 +27,14 @@
      width: 300px;
      margin-left: 10px;
  }
+
 .connectButton_s{
     padding: 6px 40px;
     margin: 8px 30px;
     width: auto;
     display: inline-block;
 }
+
 .connectButton:hover {
     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403));
     background:-moz-linear-gradient(top, #77a809 5%, #89c403 100%);
@@ -43,10 +45,12 @@
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
     background-color:#77a809;
 }
+
 .connectButton:active {
     position:relative;
     top:1px;
 }
+
 .accessButton {
     -moz-box-shadow:inset 0px 1px 0px 0px #f7c5c0;
     -webkit-box-shadow:inset 0px 1px 0px 0px #f7c5c0;
@@ -76,6 +80,7 @@
     width: 300px;
     margin-left: 10px;
 }
+
 .accessButton:hover {
     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403));
     background:-moz-linear-gradient(top, #77a809 5%, #89c403 100%);
@@ -86,14 +91,17 @@
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
     background-color:#77a809;
 }
+
 .accessButton:active {
     position:relative;
     top:1px;
 }
+
 #informationBlock{
     display: none;
     float: left;
 }
+
 #file{
     opacity: 0;
     position: absolute;
@@ -103,6 +111,23 @@
     top: 0;
     width: 100%;
     height: 100%;
+    display: block;
+}
+
+#selectedFileName{
+        white-space: nowrap; /* Отменяем перенос текста */
+        overflow: hidden; /* Обрезаем содержимое */
+        padding: 5px; /* Поля */
+        text-overflow: ellipsis; /* Многоточие */
+}
+
+#selectedFileName:hover {
+        background: #f0f0f0; /* Цвет фона */
+        white-space: normal; /* Обычный перенос текста */
+}
+
+#upload{
+    display: none;
 }
 
 /*#imgContent{*/
@@ -111,6 +136,7 @@
     /*position: absolute;*/
     /*left: 460px;*/
 /*}*/
+
 #shareLink{
     border: 1px solid grey;
     border-radius: 10px;
@@ -119,7 +145,9 @@
     padding: 10px;
     margin-left: 10px;
     color: #a09b9b;
+    display: none;
 }
+
 #penguin{
     width: 300px;
     height: 300px;

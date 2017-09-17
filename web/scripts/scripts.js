@@ -20,11 +20,23 @@ function hideInformation(){
     document.getElementById('stateButton').innerHTML = 'Show Information';
 }
 
+function fileSelected() {
+    document.getElementById('upload').style.display = 'block';
+    document.getElementById('selectedFileName').innerHTML = document.getElementById('file').value;
+}
+
+function fileUploaded(){
+    document.getElementById('upload').style.display = 'none';
+    document.getElementById('selectedFileName').innerHTML = "Select new file";
+}
+
 $(function () {
     $('#uploadFile').ajaxForm({
         success:function (msg) {
+            fileUploaded();
             alert("uploaded!");
         },error:function (msg) {
+            fileUploaded();
             alert("error");
         }
     });
@@ -34,6 +46,12 @@ function shares() {
     var share = "share=true";
     doAjax("ShareServlet",share,'doQuery_back','post',0);
 }
+
+function showSharedLink() {
+    document.getElementById('shareLink').style.display = 'block';
+    document.getElementById('shares').style.display = 'none';
+}
+
 function doQuery_back(result)
 {
     if (result.substring(0,5)=='error'){
@@ -42,5 +60,6 @@ function doQuery_back(result)
     }else{
         window.document.getElementById('shareLink').innerHTML= result;
         window.document.getElementById('shareLink').style.color="#000";
+        showSharedLink();
     }
 }
