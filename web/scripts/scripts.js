@@ -35,6 +35,7 @@ $(function () {
         success:function (msg) {
             fileUploaded();
             hideLinks(false);
+            showSharedLink(false)
             alert("uploaded!");
         },error:function (msg) {
             fileUploaded();
@@ -48,9 +49,14 @@ function shares() {
     doAjax("ShareServlet",share,'doQuery_back','post',0);
 }
 
-function showSharedLink() {
-    document.getElementById('shareLink').style.display = 'block';
-    document.getElementById('shares').style.display = 'none';
+function showSharedLink(condition) {
+    if(condition){
+        document.getElementById('shareLink').style.display = 'block';
+        document.getElementById('shares').style.display = 'none';
+    }else{
+        document.getElementById('shareLink').style.display = 'none';
+        document.getElementById('shares').style.display = 'block';
+    }
 }
 
 function doQuery_back(result)
@@ -61,7 +67,7 @@ function doQuery_back(result)
     }else{
         window.document.getElementById('shareLink').innerHTML= result;
         window.document.getElementById('shareLink').style.color="#000";
-        showSharedLink();
+        showSharedLink(true);
     }
 }
 
